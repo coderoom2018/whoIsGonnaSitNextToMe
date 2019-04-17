@@ -1,11 +1,16 @@
-const { persons, sprints, seatMap } = require("./data");
-const organizePair = require("./organizePair");
-const whoIsGonnaSitNextToMe = require("./seatRotation");
+const { persons, sprints } = require("./data");
+const { makePair } = require("./organizePair");
+
+// for (let sprint in sprints) {
+//   console.log(sprint);
+//   organizePairs(sprints[sprint], seatMap, persons);
+// }
+
+// const nextPeer = whoIsGonnaSitNextToMe(null, null, seatMap, person2);
+// console.log(nextPeer);
+const pairs = makePair(persons);
 
 for (let sprint in sprints) {
   console.log(sprint);
-  organizePair(sprints[sprint], seatMap, persons);
+  console.log(pairs[sprints[sprint]]);
 }
-
-const nextPeer = whoIsGonnaSitNextToMe(null, null, seatMap, persons);
-console.log(nextPeer);

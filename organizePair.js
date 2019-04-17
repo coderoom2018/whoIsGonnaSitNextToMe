@@ -1,4 +1,39 @@
-const organaizePairs = (nextSprintTime, seatMap, persons) => {
+const makePair = function(persons) {
+  const numOfPersons = persons.length;
+  const lastIdx = numOfPersons - 1;
+  let pairs = [];
+
+  for (let pairNum = 1; pairNum < numOfPersons; pairNum++) {
+    pairs.push([]);
+  }
+
+  let temp = [...persons];
+  if (numOfPersons % 2 === 0) {
+    for (let round = 0; round < numOfPersons - 1; round++) {
+      temp = temp
+        .slice(0, 1)
+        .concat(temp.slice(lastIdx), temp.slice(1, lastIdx));
+      for (let idx = 0; idx < numOfPersons / 2; idx++) {
+        pairs[round].push([temp[idx], temp[lastIdx - idx]]);
+      }
+    }
+  } else {
+    for (let round = 0; round < numOfPersons - 1; round++) {
+      temp.unshift(temp.pop());
+      for (let idx = 1; idx <= (numOfPersons - 1) / 2; idx++) {
+        if (idx === (numOfPersons - 1) / 2) {
+          pairs[round].push([temp[idx], temp[lastIdx - idx + 1], temp[0]]);
+        } else {
+          pairs[round].push([temp[idx], temp[lastIdx - idx + 1]]);
+        }
+      }
+    }
+  }
+
+  return pairs;
+};
+
+const organizePairs = (nextSprintTime, seatMap, persons) => {
   if (!nextSprintTime) {
     nextSprintTime = 0;
   }
@@ -33,4 +68,7 @@ const organaizePairs = (nextSprintTime, seatMap, persons) => {
   console.log(futureSeatMap);
 };
 
-module.exports = organaizePairs;
+module.exports = {
+  makePair,
+  organizePairs
+};
